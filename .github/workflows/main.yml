@@ -1,0 +1,32 @@
+name: python-sdk
+
+on:
+  push:
+    branches:
+      - '**'
+
+
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+jobs:
+  test-bindings:
+    name: Create folder and check formatting
+    runs-on:
+      - self-hosted
+      - Linux
+      - X64
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Build docker image
+        run: docker build . --tag ci_rust_$GITHUB_SHA -f ci/Dockerfile
+
+      - name: Run tests
+        run: |
+            docker run --rm -v ${{ github.workspace }}:/src -v /mnt/jenkins:/mnt/jenkins:rw -v /var/cache/jenkins:/var/cache/jenkins:rw ci_rust_$GITHUB_SHA bash -ex -c '
+            cd /app
+            python3 -m unittest discover -s tests
+            '
