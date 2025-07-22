@@ -12,7 +12,7 @@ concurrency:
 
 jobs:
   test-bindings:
-    name: Create folder and check formatting
+    name: Test python SDK bindings
     runs-on:
       - self-hosted
       - Linux
