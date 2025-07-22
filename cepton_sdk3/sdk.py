@@ -35,7 +35,6 @@ def __check(code):
 
 def _sensor_cb(handle, sensor_ptr, user_data):
     d = sensor_ptr[0].to_dict()
-    print(d)
 
     s = Sensor.find_or_create_by_handle(handle)
     s.update_info(d)
@@ -174,6 +173,8 @@ def frame_fifo_get_frame(timeout):
     """
     Get a cepton_sdk3.Frame instance from the frame FIFO.
 
+    This progresses the FIFO.
+
     Parameters
     ----------
     timeout : int
@@ -206,6 +207,7 @@ def frame_fifo_get_frame(timeout):
         sdk_frame.flags = frame.flags.ctypes.data_as(ctypes.POINTER(ctypes.c_uint16))
         sdk_frame.handle = frame.handle.ctypes.data_as(ctypes.POINTER(ctypes.c_uint64))
         __check(_c.FrameFifoExFillArray(_c.ctypes.byref(sdk_frame), timeout))
+        __check(_c.FrameFifoExNext())
     except CeptonError as e:
         if e.code_name == "CEPTON_ERROR_TIMEOUT":
             return None
