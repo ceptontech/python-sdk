@@ -15,9 +15,10 @@ if __name__ == "__main__":
     args = parser.parse_args()
     capture_path = args.file
 
+    print("Read", capture_path)
     FRAME_COUNT = 0
-    for frame in utils.ReadPcap(capture_path):
+    for frame in utils.read_pcap(capture_path):
         FRAME_COUNT += 1
         print(
-            f"get frame: {FRAME_COUNT}, size: {len(frame.flags)}, handle: {frame.handle[0]} start timestamp: {frame.handle[0],frame.timestamps[0]*1e-6:.6f}s duration: {(frame.timestamps[-1] - frame.timestamps[0])*1e-6:.6f}s"
+            f"get frame: {FRAME_COUNT}, size: {len(frame.flags)}, handle: {frame.handle[0]} start timestamp: {frame.timestamps[0]*1e-6:.6f}s duration: {(frame.timestamps[-1] - frame.timestamps[0])*1e-6:.6f}s"
         )

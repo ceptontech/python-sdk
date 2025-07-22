@@ -31,11 +31,11 @@ class CeptonError(Exception):
 def __check(code):
     if code < 0:
         raise CeptonError(code)
-    # if (code != 0): raise CeptonError(code)
 
 
 def _sensor_cb(handle, sensor_ptr, user_data):
     d = sensor_ptr[0].to_dict()
+    print(d)
 
     s = Sensor.find_or_create_by_handle(handle)
     s.update_info(d)
@@ -162,12 +162,12 @@ def enable_frame_fifo(frame_mode, num_frames):
     assert 0 <= frame_mode
 
     # Convert to us convention in Cepton SDK
-    __check(_c.EnableFrameFifo(frame_mode * 1000, num_frames))
+    __check(_c.EnableFrameFifoEx(frame_mode * 1000, num_frames))
 
 
 def disable_frame_fifo():
     """Disable the frame fifo"""
-    __check(_c.DisableFrameFifo())
+    __check(_c.DisableFrameFifoEx())
 
 
 def frame_fifo_get_frame(timeout):
@@ -186,7 +186,7 @@ def frame_fifo_get_frame(timeout):
     A cepton_sdk3.Frame instance or None.
     """
     try:
-        length = _c.FrameFifoPeekNumPoints(timeout)
+        length = _c.FrameFifoExPeekNumPoints(2000)
         __check(length)
         # initialize to zeros
         frame = Frame(length)
@@ -205,7 +205,7 @@ def frame_fifo_get_frame(timeout):
         )
         sdk_frame.flags = frame.flags.ctypes.data_as(ctypes.POINTER(ctypes.c_uint16))
         sdk_frame.handle = frame.handle.ctypes.data_as(ctypes.POINTER(ctypes.c_uint64))
-        __check(_c.FrameFifoFillArray(_c.ctypes.byref(sdk_frame), timeout))
+        __check(_c.FrameFifoExFillArray(_c.ctypes.byref(sdk_frame), timeout))
     except CeptonError as e:
         if e.code_name == "CEPTON_ERROR_TIMEOUT":
             return None

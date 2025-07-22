@@ -173,7 +173,7 @@ FrameFifoExIsEmpty = lib.CeptonFrameFifoExEmpty
 FrameFifoExIsFull = lib.CeptonFrameFifoExFull
 
 FrameFifoExFillArray = lib.CeptonFrameFifoExFillArray
-FrameFifoExFillArray.argtypes = [SDKFrameArray, ctypes.c_uint32]
+FrameFifoExFillArray.argtypes = [ctypes.POINTER(SDKFrameArray), ctypes.c_uint32]
 
 FrameFifoExPeekNumPoints = lib.CeptonFrameFifoExPeekFrameNumPoints
 FrameFifoExPeekNumPoints.argtypes = [ctypes.c_uint32]

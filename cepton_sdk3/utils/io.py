@@ -6,11 +6,13 @@ from .. import sdk
 def read_pcap(path: str, frame_mode: int = 0):
     """Returns an iterator over frame sin a pcap"""
     capture_path = path
+
     # Initialize
     sdk.initialize()
+
     # LoadPcap
     # speed=100 means 1x speed. Speed=0 means as fast as possible.
-    sdk.load_pcap(capture_path, speed=0, pause_on_load=True)
+    sdk.load_pcap(capture_path, speed=100, pause_on_load=True)
 
     # Enable FIFO feature
     # Frame aggregation mode set to 0(natrual). Allocate 400 frame buffers in the frame FIFO
@@ -20,7 +22,6 @@ def read_pcap(path: str, frame_mode: int = 0):
     # Loop until pcap replay is finished
     while not sdk.replay_is_finished():
         frame = sdk.frame_fifo_get_frame(timeout=2000)  # 2000 ms
-
         if not frame is None:
             yield frame
 
