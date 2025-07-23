@@ -29,7 +29,7 @@ jobs:
 
       - name: Run tests
         run: |
-            docker run --rm ci_rust_$GITHUB_SHA bash -ex -c '
+            docker run --rm -v /mnt/jenkins/python-sdk-ci-test:/root/Documents/cepton ci_rust_$GITHUB_SHA bash -ex -c '
             cd /app
             python3 -m unittest discover -s tests
             '
