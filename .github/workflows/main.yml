@@ -21,12 +21,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Prep calibration files
+        run: cp /mnt/jenkins/python-sdk-ci-test/calibration_*.json .
+
       - name: Build docker image
         run: docker build . --tag ci_rust_$GITHUB_SHA -f ci/Dockerfile
 
       - name: Run tests
         run: |
-            docker run --rm -v ${{ github.workspace }}:/src -v /mnt/jenkins/python-sdk-ci-test:/root/Documents/cepton ci_rust_$GITHUB_SHA bash -ex -c '
+            docker run --rm ci_rust_$GITHUB_SHA bash -ex -c '
             cd /app
             python3 -m unittest discover -s tests
             '
