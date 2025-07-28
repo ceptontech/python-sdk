@@ -1,1 +1,1 @@
-# Cepton Python SDK3 wrapper
+# Cepton Python SDK3
