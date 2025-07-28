@@ -32,7 +32,7 @@ __platform_lookup = {}
 
 
 def _load_sdk():
-    name = "cepton_sdk2"  # FIXME: the SDK build still calls this sdk2
+    name = "cepton_sdk3"
 
     # Find platform
     mach = platform.machine()
