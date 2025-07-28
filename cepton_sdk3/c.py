@@ -28,7 +28,9 @@ __machine_lookup = {
     "aarch64": "arm64",
 }
 
-__platform_lookup = {}
+__platform_lookup = {
+    "win32": "win",
+}
 
 
 def _load_sdk():
@@ -47,7 +49,7 @@ def _load_sdk():
         lib_name = f"lib{name}.so"
     elif pl == "darwin":
         lib_name = f"lib{name}.dylib"
-    elif pl == "win32":
+    elif pl == "win" or pl == "win32":
         lib_name = f"{name}.dll"
     else:
         raise NotImplementedError("Platform not supported!")
