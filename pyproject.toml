@@ -19,3 +19,4 @@ description = "Cepton SDK3"
 readme = "README.md"
 
 license = "MIT"
+license-files = ["LICENSE"]
