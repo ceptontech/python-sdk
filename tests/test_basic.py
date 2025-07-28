@@ -24,6 +24,7 @@ class BasicTests(unittest.TestCase):
             frame = sdk.frame_fifo_get_frame(2000)
             frame_counts.append(frame.positions.shape[0])
 
+        self.assertGreater(len(frame_counts), 0)
         self.assertTrue(all(count > 0 for count in frame_counts))
 
         sdk.deinitialize()

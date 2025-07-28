@@ -1,5 +1,6 @@
 import numpy
 
+
 class StructureOfArrays:
     """
     Group multiple arrays together and allow operations on all arrays
@@ -47,14 +48,16 @@ class StructureOfArrays:
         if name not in self._get_array_member_names():
             # Check member
             raise AttributeError(
-                "Member `" + name + "` not listed in `_get_array_member_names`!")
+                "Member `" + name + "` not listed in `_get_array_member_names`!"
+            )
         return super().__setattr__(name, value)
 
     @classmethod
     def get_common_names(cls, other):
         """Returns array member names common to both classes."""
-        return list(set(cls._get_array_member_names()) &
-                    set(other._get_array_member_names()))
+        return list(
+            set(cls._get_array_member_names()) & set(other._get_array_member_names())
+        )
 
     def update(self, other, names=None):
         """Copy fields from other."""
@@ -77,7 +80,7 @@ class StructureOfArrays:
 
     def __getitem__(self, key):
         """Supports numpy style indexing as if object were 1-d array."""
-        assert (not isinstance(key, tuple)), "Key must be 1-d."
+        assert not isinstance(key, tuple), "Key must be 1-d."
 
         cls = type(self)
         result = cls(numpy.arange(len(self))[key].size)
@@ -88,7 +91,7 @@ class StructureOfArrays:
 
     def __setitem__(self, key, other):
         """Supports numpy style assignment as if object were 1-d array."""
-        assert (not isinstance(key, tuple)), "Key must be 1-d."
+        assert not isinstance(key, tuple), "Key must be 1-d."
 
         names = self.get_common_names(other)
         for name in names:
@@ -99,8 +102,8 @@ class StructureOfArrays:
         Equivalent to
             self[key] = other[other_key]
         """
-        assert (not isinstance(key, tuple)), "Key must be 1-d."
-        assert (not isinstance(other_key, tuple)), "Key must be 1-d."
+        assert not isinstance(key, tuple), "Key must be 1-d."
+        assert not isinstance(other_key, tuple), "Key must be 1-d."
 
         names = self.get_common_names(other)
         for name in names:
@@ -120,7 +123,6 @@ class StructureOfArrays:
         offset = 0
         for i in range(len(other_list)):
             other = other_list[i]
-            self[offset:offset + len(other)] = other
+            self[offset : offset + len(other)] = other
             offset += len(other)
         return self
-

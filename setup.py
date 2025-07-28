@@ -2,11 +2,11 @@ import setuptools
 
 setuptools.setup(
     name="cepton_sdk3",
-    version="3.0.0.0",
+    version="3.0.17.14",
     description="Cepton SDK3 Python3 bindings",
     url="https://www.cepton.com",
     author="Cepton Technologies, Inc.",
-    author_email="dongyi.liao@cepton.com",
+    author_email="will.lauer@cepton.com",
     license="MIT",
     classifiers=[
         "Programming Language :: Python :: 3",
